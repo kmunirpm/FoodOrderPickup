@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Home Page</title>
+  <title>Food To Go</title>
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
@@ -14,7 +14,24 @@
 </head>
 
 <body>
-  <h1>Have fun! 🥔</h1>
+  <!-- This brings in the ejs from partials/_header.ejs -->
+  <%- include('partials/_header') %>
+  <main>
+    <!-- Middle of homepage -->
+    <div class="middle-section">
+      <div class="app-description">
+        <h1>Welcome to Homepage! App Description</h1>
+      </div>
+      <div class="how-to-order">
+        <h1>How to Order!</h1>
+      </div>
+
+    </div>
+  </main>
+
+
+
+
 </body>
 
 </html>

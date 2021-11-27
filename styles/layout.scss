@@ -4,3 +4,38 @@ body,
 html {
   margin: 0;
 }
+
+/* Top nav bar (fixed) */
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  height: 120px;
+  /* viewport-fit: 100vw; */
+  background-color: #6c71a0;
+  color: #FFFFFF;
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  .navbar-brand {
+    display: flex;
+    justify-content: space-between;
+    color: black;
+    margin: 2em 2em;
+  }
+
+  .navbar-nav {
+    display: contents;
+  }
+
+}
+
+main {
+  .middle-section {
+    display: flex;
+    justify-content: space-between;
+  }
+}
