@@ -24,7 +24,13 @@ nav {
     display: flex;
     justify-content: space-between;
     color: black;
-    margin: 2em 2em;
+    margin: 0em 1em;
+    font: small-caps bold 24px/1 sans-serif;
+
+    #logo-gif {
+      width: 130px;
+      height: 130px;
+    }
   }
 
   .navbar-nav {
