@@ -28,6 +28,12 @@ nav {
     display: contents;
   }
 
+  .nav-item, .place-order {
+    margin-top: 4em;
+    margin-right: 5em;
+
+  }
+
 }
 
 
@@ -81,6 +87,7 @@ main {
     background-color:rgb(198, 222, 238);
     height: 500px;
     text-align: center;
+    border-radius: 5%;
   }
 
   .menu-image {
@@ -104,5 +111,39 @@ main {
     background-color: rgb(236, 227, 215);
   }
 
+  ul {
+    text-align: left;
+    margin-left: 3em;
+  }
 
+  // SECTION 3
+  // Table in user_orders.ejs
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 20px;
+  }
+
+  .table-title {
+    font-weight: bolder;
+    background-color:  rgb(236, 227, 215);
+  }
+
+  .page-title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5em;
+  }
+
+  .detail-order-button {
+    border-radius: 5%;
+    background-color: rgb(236, 227, 215);
+  }
 }
+

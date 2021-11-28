@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Food To Go</title>
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/app.js"></script>
+</head>
+
+<body>
+  <!-- This brings in the ejs from partials/_header.ejs -->
+  <%- include('partials/_header') %>
+  <main>
+<!-- SECTION 3 -->
+<div class="page-title">
+  <h1>Your Orders</h1>
+</div>
+
+    <!-- Table for User Orders -->
+    <table>
+      <tr class="table-title">
+        <td>Order Number</td>
+        <td>Description</td>
+        <td>Total</td>
+        <td>More Info</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Text About Order</td>
+        <td>$10.00</td>
+        <td><button type="submit" class="detail-order-button">Detail About Order</button></td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Text About Order</td>
+        <td>$20.00</td>
+        <td><button type="submit" class="detail-order-button">Detail About Order</button></td>
+      </tr>
+    </table>
+
+  </main>
+
+
+
+
+</body>
+
+</html>
