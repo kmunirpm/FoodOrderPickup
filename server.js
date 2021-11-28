@@ -7,6 +7,8 @@ const sassMiddleware = require("./lib/sass-middleware");
 const express = require("express");
 const app = express();
 const morgan = require("morgan");
+const sessions = require('express-session');
+
 
 // PG database client/connection setup
 const { Pool } = require("pg");
@@ -21,6 +23,12 @@ app.use(morgan("dev"));
 
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
+// app.use(
+//   cookieSession({
+//     name: "session",
+//     keys: ["key1", "key2"],
+//   })
+// );
 
 app.use(
   "/styles",
@@ -37,11 +45,18 @@ app.use(express.static("public"));
 // Note: Feel free to replace the example routes below with your own
 const usersRoutes = require("./routes/users");
 const widgetsRoutes = require("./routes/widgets");
+const ordersRoutes = require("./routes/orders");
+const orderdetailsRoutes = require("./routes/orderdetails");
+const adminRoutes = require("./routes/admin");
+const { json } = require("express");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
-app.use("/api/users", usersRoutes(db));
+app.use("/users", usersRoutes(db));
 app.use("/api/widgets", widgetsRoutes(db));
+app.use("/orders", ordersRoutes(db));
+app.use("/orderdetails", orderdetailsRoutes(db));
+app.use("/admin", adminRoutes(db));
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -49,9 +64,18 @@ app.use("/api/widgets", widgetsRoutes(db));
 // Separate them into separate routes files (see above).
 
 app.get("/", (req, res) => {
-  res.render("index");
+  db.query(`SELECT * FROM menu_items LIMIT 6;`)
+  .then(data => {
+    const menu = data.rows;
+    res.render("index", {menu:menu});
+  })
+  .catch(err => {
+    res
+      .status(500)
+      .json({ error: err.message });
+  });
 });
 
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+  console.log(`Food Order app listening on port ${PORT}`);
 });

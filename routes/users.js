@@ -9,8 +9,13 @@ const express = require('express');
 const router  = express.Router();
 
 module.exports = (db) => {
+  //Route for
   router.get("/", (req, res) => {
-    db.query(`SELECT * FROM users;`)
+    res.redirect("/")
+  });
+
+  router.get("/:id", (req, res) => {
+    db.query(`SELECT * FROM users where id = ${req.params.id};`)
       .then(data => {
         const users = data.rows;
         res.json({ users });
@@ -21,5 +26,22 @@ module.exports = (db) => {
           .json({ error: err.message });
       });
   });
+
+  router.get("/login/:id", (req, res) => {
+    db.query(`SELECT * FROM users where id = ${req.params.id};`)
+      .then(data => {
+        const users = data.rows;
+        //req.session.user_id = req.params.id
+        res.json({ users });
+      })
+      .catch(err => {
+        res
+          .status(500)
+          .json({ error: err.message });
+      });
+  });
+
+
+
   return router;
 };
