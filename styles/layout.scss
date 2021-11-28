@@ -40,6 +40,7 @@ nav {
 main {
   width: 100%;
   margin: 2em 2em;
+  margin-top: 130px;
 
   // SECTION 1
   .middle-page-wrapper {
@@ -63,6 +64,7 @@ main {
     flex-basis: 100%;
     margin: 1em 1em;
     flex: 1;
+    flex-basis: 25%;
   }
 
   .welcome-to-homepage {
