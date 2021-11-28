@@ -48,6 +48,7 @@ const widgetsRoutes = require("./routes/widgets");
 const ordersRoutes = require("./routes/orders");
 const orderdetailsRoutes = require("./routes/orderdetails");
 const adminRoutes = require("./routes/admin");
+const { json } = require("express");
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
@@ -63,22 +64,16 @@ app.use("/admin", adminRoutes(db));
 // Separate them into separate routes files (see above).
 
 app.get("/", (req, res) => {
-  //res.render("index");
-  db.query(`SELECT * FROM menu_items;`)
+  db.query(`SELECT * FROM menu_items LIMIT 6;`)
   .then(data => {
     const menu = data.rows;
-    res.json({ menu });
+    res.render("index", {menu:menu});
   })
   .catch(err => {
     res
       .status(500)
       .json({ error: err.message });
   });
-});
-
-// added by MN
-app.get("/orders/user/:id", (req, res) => {
-  res.render("user_orders");
 });
 
 app.listen(PORT, () => {

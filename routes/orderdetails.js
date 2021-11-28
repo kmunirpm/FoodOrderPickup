@@ -7,7 +7,6 @@
 
 const express = require("express");
 const router = express.Router();
-let shoppingCart = [];
 
 module.exports = (db) => {
   router.get("/", (req, res) => {
@@ -22,20 +21,6 @@ module.exports = (db) => {
   });
   router.get("/cart", (req, res) => {
     res.send(shoppingCart);
-  });
-
-  //add item to the cart
-  router.get("/cart/:id", (req, res) => {
-    db.query(`SELECT * FROM menu_items where id = ${req.params.id};`)
-      .then((data) => {
-        const menu = data.rows;
-        shoppingCart.push(menu);
-        console.log(shoppingCart);
-      })
-      .catch((err) => {
-        res.status(500).json({ error: err.message });
-      });
-    res.redirect("/orderdetails/cart");
   });
 
   return router;
