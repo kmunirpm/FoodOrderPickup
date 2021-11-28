@@ -76,6 +76,11 @@ app.get("/", (req, res) => {
   });
 });
 
+// added by MN
+app.get("/orders/user/:id", (req, res) => {
+  res.render("user_orders");
+});
+
 app.listen(PORT, () => {
   console.log(`Food Order app listening on port ${PORT}`);
 });

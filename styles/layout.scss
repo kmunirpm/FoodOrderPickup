@@ -4,3 +4,146 @@ body,
 html {
   margin: 0;
 }
+
+/* Top nav bar (fixed) */
+nav {
+  display: flex;
+  justify-content: space-between;
+  height: 120px;
+  background-color: #6c71a0;
+  color: #FFFFFF;
+  z-index: 10;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+
+  // Logo Gif on top left corner
+  #logo-gif {
+    width: 130px;
+    height: 130px;
+  }
+
+  .navbar-nav {
+    display: contents;
+  }
+
+  .nav-item, .place-order {
+    margin-top: 4em;
+    margin-right: 5em;
+
+  }
+
+}
+
+
+main {
+  width: 100%;
+  margin: 2em 2em;
+
+  // SECTION 1
+  .middle-page-wrapper {
+    display: flex;
+    background-color: rgb(181, 204, 219);
+  }
+
+  // Middle section that contains Welcome to Homepage and How to Order
+  .row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  // Column for Welcome to Homepage and How to Order
+  .column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-basis: 100%;
+    margin: 1em 1em;
+    flex: 1;
+  }
+
+  .welcome-to-homepage {
+    background-color: rgb(198, 222, 238);
+    height: 200px;
+    text-align: center;
+  }
+
+  .how-to-order {
+    background-color:rgb(198, 222, 238);
+    height: 200px;
+    text-align: center;
+  }
+
+  // SECTION 2
+  .menu-page-wrapper {
+    display: flex;
+    background-color: rgb(181, 204, 219);
+  }
+
+  .menu {
+    background-color:rgb(198, 222, 238);
+    height: 500px;
+    text-align: center;
+    border-radius: 5%;
+  }
+
+  .menu-image {
+    width: 400px;
+    height: 300px;
+    margin-top: 5%;
+  }
+
+  .menu-price-and-add {
+    display: flex;
+    justify-content: space-between;
+    margin: 1em 3em;
+    align-content: center;
+  }
+
+  .add-button {
+    margin-top: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 30%;
+    background-color: rgb(236, 227, 215);
+  }
+
+  ul {
+    text-align: left;
+    margin-left: 3em;
+  }
+
+  // SECTION 3
+  // Table in user_orders.ejs
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 20px;
+  }
+
+  .table-title {
+    font-weight: bolder;
+    background-color:  rgb(236, 227, 215);
+  }
+
+  .page-title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 5em;
+  }
+
+  .detail-order-button {
+    border-radius: 5%;
+    background-color: rgb(236, 227, 215);
+  }
+}
+
