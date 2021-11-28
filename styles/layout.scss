@@ -6,12 +6,10 @@ html {
 }
 
 /* Top nav bar (fixed) */
-
 nav {
   display: flex;
   justify-content: space-between;
   height: 120px;
-  /* viewport-fit: 100vw; */
   background-color: #6c71a0;
   color: #FFFFFF;
   z-index: 10;
@@ -20,17 +18,10 @@ nav {
   left: 0;
   width: 100%;
 
-  .navbar-brand {
-    display: flex;
-    justify-content: space-between;
-    color: black;
-    margin: 0em 1em;
-    font: small-caps bold 24px/1 sans-serif;
-
-    #logo-gif {
-      width: 130px;
-      height: 130px;
-    }
+  // Logo Gif on top left corner
+  #logo-gif {
+    width: 130px;
+    height: 130px;
   }
 
   .navbar-nav {
@@ -39,9 +30,79 @@ nav {
 
 }
 
+
 main {
-  .middle-section {
+  width: 100%;
+  margin: 2em 2em;
+
+  // SECTION 1
+  .middle-page-wrapper {
+    display: flex;
+    background-color: rgb(181, 204, 219);
+  }
+
+  // Middle section that contains Welcome to Homepage and How to Order
+  .row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  // Column for Welcome to Homepage and How to Order
+  .column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-basis: 100%;
+    margin: 1em 1em;
+    flex: 1;
+  }
+
+  .welcome-to-homepage {
+    background-color: rgb(198, 222, 238);
+    height: 200px;
+    text-align: center;
+  }
+
+  .how-to-order {
+    background-color:rgb(198, 222, 238);
+    height: 200px;
+    text-align: center;
+  }
+
+  // SECTION 2
+  .menu-page-wrapper {
+    display: flex;
+    background-color: rgb(181, 204, 219);
+  }
+
+  .menu {
+    background-color:rgb(198, 222, 238);
+    height: 500px;
+    text-align: center;
+  }
+
+  .menu-image {
+    width: 400px;
+    height: 300px;
+    margin-top: 5%;
+  }
+
+  .menu-price-and-add {
     display: flex;
     justify-content: space-between;
+    margin: 1em 3em;
+    align-content: center;
   }
+
+  .add-button {
+    margin-top: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 30%;
+    background-color: rgb(236, 227, 215);
+  }
+
+
 }
