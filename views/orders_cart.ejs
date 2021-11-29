@@ -28,7 +28,6 @@
         <td>Price</td>
         <td>Quantity</td>
         <td>Sub Total</td>
-        <td>Edit</td>
         <td>Delete</td>
       </tr>
       <%  for(const key in shoppingCart) { %>
@@ -36,10 +35,15 @@
           <td><h4><%= shoppingCart[key].name %></h4>
           <img class="menu-image" src="<%= shoppingCart[key].picture_url %>" alt="menu1" /> </td>
           <td>$<%= shoppingCart[key].price_in_cents/100 %></td>
-          <td><%= shoppingCart[key].qty %></td>
-          <td><%= (shoppingCart[key].qty)*(shoppingCart[key].price_in_cents/100) %></td>
-          <td>Edit</td>
-          <td>Delete</td>
+          <form method="POST" action="/orders/cart/modify">
+            <td>
+              <input type="hidden" name="pid" value="<%= shoppingCart[key].id %>" />
+              <input name="qty" value="<%= shoppingCart[key].qty %>" />
+              <input type="submit" name="edit" value="Edit" />
+            </td>
+            <td><%= (shoppingCart[key].qty)*(shoppingCart[key].price_in_cents/100) %></td>
+            <td><input type="submit" name="delete" value="Delete" /></td>
+          </form>
         </tr>
       <% }%>
     </table>

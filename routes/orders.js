@@ -43,8 +43,6 @@ module.exports = (db) => {
       `INSERT INTO orders (user_id, total, date) values ($1, $2, $3);
                 INSERT INTO ordered_items (order_id, menu_item_id, quantity) values ($1, $2, $3)`
     )
-
-
       .then((data) => {
         const orders = data.rows;
         res.json({ orders });
@@ -56,22 +54,13 @@ module.exports = (db) => {
 
   //view the cart
   router.get("/cart", (req, res) => {
-    console.log(shoppingCart);
-
+    console.log(shoppingCart)
     return res.render("orders_cart", {shoppingCart});
-    // db.query(`SELECT * FROM menu_items where id = ${req.params.id};`)
-    //   .then((data) => {
-
-    //   })
-    //   .catch((err) => {
-    //     res.status(500).json({ error: err.message });
-    //   });
-    // res.redirect("/");
   });
 
   //add item to the cart
-  router.get("/cart/:id", (req, res) => {
-    db.query(`SELECT * FROM menu_items where id = ${req.params.id};`)
+  router.post("/cart", (req, res) => {req.body.longURL
+    db.query(`SELECT * FROM menu_items where id = ${req.body.pid};`)
       .then((data) => {
         const menu = data.rows[0];
         if (typeof shoppingCart[menu.id] === "undefined"){
@@ -80,12 +69,23 @@ module.exports = (db) => {
         } else {
           shoppingCart[menu.id].qty += 1;
         }
-        console.log(shoppingCart);
         res.redirect("/");
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
       });
+  });
+
+  //modifies the shopping cart
+  router.post("/cart/modify", (req, res) => {
+    console.log(req.body)
+    if (typeof req.body.edit !== "undefined"){
+      shoppingCart[req.body.pid].qty = req.body.qty;
+    }
+    else if (typeof req.body.delete !== "undefined") {
+      delete shoppingCart[req.body.pid];
+    }
+    return res.render("orders_cart", {shoppingCart})
   });
 
   return router;

@@ -27,7 +27,7 @@ module.exports = (db) => {
       });
   });
 
-  router.get("/login/:id", (req, res) => {
+  router.get("/lo   gin/:id", (req, res) => {
     db.query(`SELECT * FROM users where id = ${req.params.id};`)
       .then(data => {
         const users = data.rows;
