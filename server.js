@@ -64,6 +64,7 @@ app.use("/admin", adminRoutes(db));
 // Separate them into separate routes files (see above).
 
 app.get("/", (req, res) => {
+
   db.query(`SELECT * FROM menu_items LIMIT 6;`)
   .then(data => {
     const menu = data.rows;
