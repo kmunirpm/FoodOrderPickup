@@ -37,7 +37,7 @@ module.exports = (db) => {
   });
 
   //POST order is placed. record stored in database. sms sent to owner
-  router.post("/", (req, res) => {
+  router.post("/ordered", (req, res) => {
     console.log(req.query);
     db.query(
       `INSERT INTO orders (user_id, total, date) values ($1, $2, $3);
@@ -54,16 +54,17 @@ module.exports = (db) => {
 
   //view the cart
   router.get("/cart", (req, res) => {
-    console.log(shoppingCart)
-    return res.render("orders_cart", {shoppingCart});
+    console.log(shoppingCart);
+    return res.render("orders_cart", { shoppingCart });
   });
 
   //add item to the cart
-  router.post("/cart", (req, res) => {req.body.longURL
+  router.post("/cart", (req, res) => {
+    req.body.longURL;
     db.query(`SELECT * FROM menu_items where id = ${req.body.pid};`)
       .then((data) => {
         const menu = data.rows[0];
-        if (typeof shoppingCart[menu.id] === "undefined"){
+        if (typeof shoppingCart[menu.id] === "undefined") {
           shoppingCart[menu.id] = menu;
           shoppingCart[menu.id].qty = 1;
         } else {
@@ -78,14 +79,13 @@ module.exports = (db) => {
 
   //modifies the shopping cart
   router.post("/cart/modify", (req, res) => {
-    console.log(req.body)
-    if (typeof req.body.edit !== "undefined"){
+    console.log(req.body);
+    if (typeof req.body.edit !== "undefined") {
       shoppingCart[req.body.pid].qty = req.body.qty;
-    }
-    else if (typeof req.body.delete !== "undefined") {
+    } else if (typeof req.body.delete !== "undefined") {
       delete shoppingCart[req.body.pid];
     }
-    return res.render("orders_cart", {shoppingCart})
+    return res.render("orders_cart", { shoppingCart });
   });
 
   return router;
