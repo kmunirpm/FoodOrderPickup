@@ -10,7 +10,7 @@ nav {
   display: flex;
   justify-content: space-between;
   height: 120px;
-  background-color: #6c71a0;
+  background-color: #8a7039;
   color: #FFFFFF;
   z-index: 10;
   position: fixed;
@@ -20,14 +20,30 @@ nav {
 
   // Logo Gif on top left corner
   #logo-gif {
-    width: 130px;
-    height: 130px;
+    width: 120px;
+    height: 120px;
   }
 
   .navbar-nav {
     display: contents;
   }
 
+  // Cart Button
+  .place-order {
+    display: flex;
+  }
+
+  // Shopping Cart and Count - Top Right Corner of PAge
+  .cart-count {
+    display: flex;
+    color: black;
+    margin-right: 40px;
+    font-size: 25px;
+    margin-top: 2.75em;
+
+  }
+
+  // Buttons on Nav Bar
   a.button {
     -webkit-appearance: button;
     -moz-appearance: button;
@@ -38,6 +54,7 @@ nav {
     margin-top: 3em;
     margin-right: 5em;
   }
+
 
 }
 
