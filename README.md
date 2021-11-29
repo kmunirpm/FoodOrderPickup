@@ -2,11 +2,25 @@
 
 ## Project Description
 
+Food ordering application that uses Twilio to connect customers to the restaurant. Hungry customers
+of a ficticious restaurant can visit it's website, select one or more dishes and place an order for pick-up. The customer will receive a notification when their order is ready. The restaurant will receive the order via SMS and will notify the client how long it will take to fulfill it.
 
+* Hungry clients of a fictitious restaurant can visit its website, Select one or more dishes and place an order for pick-up.
+* They will receive a notification when their order is ready.
+* When an order is placed the restaurant receives the order via SMS. The restaurant can then specify how long it will take to fulfill it. Once they provide this information, the website updates for the client and also notifies them via SMS.
 
+## Final Product
+![""]()
+![""]()
+![""]()
+![""]()
+![""]()
 
+### User stories
+!["User Stories"]()
 
-
+## Database Design
+!["Entity Relation Diagram"]()
 
 
 ## Dependencies
@@ -18,6 +32,7 @@
 - EJS
 - Morgan
 - Dotenv
+- Node-sass-middleware
 - Nodemon
 - Twilio (trial version of telecomm API service used to implement SMS communication between the client and the restaurant)
 
@@ -37,8 +52,15 @@
   - Note: nodemon is used, so you should not have to restart your server
 7. Visit `http://localhost:8080/`
 
+### Future additions
+
+- Login/Registration
+- Payment processing
+- Notes from the client
+- Customization of orders
+
+
 ## Developers Team
 
 [Kashif Munir](https://github.com/kmunirpm), [Morsal Niyaz](https://github.com/MorsalN), [Anastassia Tsvetkova](https://github.com/Nastik2021)
-
 
