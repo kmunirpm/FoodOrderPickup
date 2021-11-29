@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Food To Go</title>
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/app.js"></script>
+</head>
+
+<body>
+  <!-- This brings in the ejs from partials/_header.ejs -->
+  <%- include('partials/_header') %>
+  <main>
+<!-- SECTION 3 -->
+<div class="page-title">
+  <h1>Shopping Cart</h1>
+</div>
+    <!-- Table for User Orders -->
+    <table>
+      <tr class="table-title">
+        <td>Product</td>
+        <td>Price</td>
+        <td>Quantity</td>
+        <td>Sub Total</td>
+        <td>Delete</td>
+      </tr>
+      <%  for(const key in shoppingCart) { %>
+        <tr>
+          <td><h4><%= shoppingCart[key].name %></h4>
+          <img class="menu-image" src="<%= shoppingCart[key].picture_url %>" alt="menu1" /> </td>
+          <td>$<%= shoppingCart[key].price_in_cents/100 %></td>
+          <form method="POST" action="/orders/cart/modify">
+            <td>
+              <input type="hidden" name="pid" value="<%= shoppingCart[key].id %>" />
+              <input name="qty" value="<%= shoppingCart[key].qty %>" />
+              <input type="submit" name="edit" value="Edit" />
+            </td>
+            <td><%= (shoppingCart[key].qty)*(shoppingCart[key].price_in_cents/100) %></td>
+            <td><input type="submit" name="delete" value="Delete" /></td>
+          </form>
+        </tr>
+      <% }%>
+    </table>
+
+
+
+
+  </main>
+
+
+
+
+</body>
+
+</html>
