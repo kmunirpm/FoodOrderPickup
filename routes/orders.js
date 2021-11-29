@@ -43,6 +43,8 @@ module.exports = (db) => {
       `INSERT INTO orders (user_id, total, date) values ($1, $2, $3);
                 INSERT INTO ordered_items (order_id, menu_item_id, quantity) values ($1, $2, $3)`
     )
+
+
       .then((data) => {
         const orders = data.rows;
         res.json({ orders });
@@ -55,7 +57,8 @@ module.exports = (db) => {
   //view the cart
   router.get("/cart", (req, res) => {
     console.log(shoppingCart);
-    return res.json(shoppingCart);
+
+    return res.render("orders_cart", {shoppingCart});
     // db.query(`SELECT * FROM menu_items where id = ${req.params.id};`)
     //   .then((data) => {
 
@@ -71,10 +74,12 @@ module.exports = (db) => {
     db.query(`SELECT * FROM menu_items where id = ${req.params.id};`)
       .then((data) => {
         const menu = data.rows[0];
-        //if (menu.id == )
-        shoppingCart[menu.id] = menu;
-        shoppingCart[menu.id].qty = 1;
-
+        if (typeof shoppingCart[menu.id] === "undefined"){
+          shoppingCart[menu.id] = menu;
+          shoppingCart[menu.id].qty = 1;
+        } else {
+          shoppingCart[menu.id].qty += 1;
+        }
         console.log(shoppingCart);
         res.redirect("/");
       })

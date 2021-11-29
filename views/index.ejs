@@ -55,7 +55,7 @@
               <div><%= menu.description %></div>
               <div class="menu-price-and-add">
                 <h3>$<%= menu.price_in_cents/100 %></h3>
-                <form method="Get" action="/orders/cart/<%= menu.id %>"><input type="hidden" value="<%= menu.id %>"><button type="submit" class="add-button">+</button></form>
+                <form method="GET" action="/orders/cart/<%= menu.id %>"><input type="hidden" value="<%= menu.id %>"><button type="submit" class="add-button">+</button></form>
               </div>
             </div>
           </div>
