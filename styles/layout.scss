@@ -10,7 +10,7 @@ nav {
   display: flex;
   justify-content: space-between;
   height: 120px;
-  background-color: #6c71a0;
+  background-color: #8a7039;
   color: #FFFFFF;
   z-index: 10;
   position: fixed;
@@ -20,19 +20,41 @@ nav {
 
   // Logo Gif on top left corner
   #logo-gif {
-    width: 130px;
-    height: 130px;
+    width: 120px;
+    height: 120px;
   }
 
   .navbar-nav {
     display: contents;
   }
 
-  .nav-item, .place-order {
-    margin-top: 4em;
-    margin-right: 5em;
+  // Cart Button
+  .place-order {
+    display: flex;
+  }
+
+  // Shopping Cart and Count - Top Right Corner of PAge
+  .cart-count {
+    display: flex;
+    color: black;
+    margin-right: 40px;
+    font-size: 25px;
+    margin-top: 2.75em;
 
   }
+
+  // Buttons on Nav Bar
+  a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+    color: initial;
+    margin-top: 3em;
+    margin-right: 5em;
+  }
+
 
 }
 
@@ -42,10 +64,12 @@ main {
   margin: 2em 2em;
   margin-top: 130px;
 
+
   // SECTION 1
   .middle-page-wrapper {
     display: flex;
-    background-color: rgb(181, 204, 219);
+    // background-color: rgb(7, 41, 63);
+    background: url('/images/menu00.jpeg');
   }
 
   // Middle section that contains Welcome to Homepage and How to Order
@@ -68,21 +92,35 @@ main {
   }
 
   .welcome-to-homepage {
-    background-color: rgb(198, 222, 238);
+    background-color: rgb(0, 0, 0);
+    opacity: 0.75;
     height: 200px;
     text-align: center;
+    color: white;
   }
 
   .how-to-order {
-    background-color:rgb(198, 222, 238);
+    background-color: rgb(0, 0, 0);
+    opacity: 0.75;
     height: 200px;
     text-align: center;
+    color: white;
   }
 
   // SECTION 2
   .menu-page-wrapper {
     display: flex;
-    background-color: rgb(181, 204, 219);
+    // background-color: rgb(181, 204, 219);
+    background: rgb(26, 27, 27);
+    background: linear-gradient(
+      227deg,
+      rgb(26, 27, 27) 0%,
+      rgb(26, 27, 27) 20%,
+      rgb(26, 27, 27) 34%,
+      rgb(26, 27, 27) 59%,
+      rgba(163, 208, 219, 1) 74%,
+      rgba(163, 208, 219, 1) 100%
+    );
   }
 
   .menu {
@@ -147,5 +185,7 @@ main {
     border-radius: 5%;
     background-color: rgb(236, 227, 215);
   }
+
 }
+
 
