@@ -37,7 +37,12 @@
         <td><%= orders.total %> $</td>
         <td><%= (new Date(orders.date)).toLocaleDateString("en-US")%></td>
 
-        <td><button method="POST" action="/order/:id/"type="submit" class="detail-order-button">Detail About Order</button></td>
+        <!-- <form button method="GET" action="/order/:id/"> -->
+          <td>
+            <a href="/admin/order/<%=orders.id%>" class="btn btn-primary">Order Details</a>
+            <!-- <button value="<%= orders.id %>" type="submit" class="detail-order-button">Detail About Order</button> -->
+          </td>
+        <!-- </form> -->
       </tr>
       <tr>
 

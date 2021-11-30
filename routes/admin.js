@@ -32,6 +32,7 @@ module.exports = (db) => {
               WHERE order_id = ${req.params.id};`)
       .then((data) => {
         const orders = data.rows;
+        console.log("TEST")
         res.render("admin_order_selected", { orders });
       })
       .catch((err) => {

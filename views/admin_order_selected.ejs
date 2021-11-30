@@ -31,13 +31,12 @@
       </tr>
 
         <% console.log('orders: ', orders)%>
-        <% orders.forEach(function(orders) { %>
-
-      <tr>
-        <td><%= orders.menu_item_id %></td>
-        <td></td>
-        <td></td>
-      </tr>
+        <% orders.forEach(function(order) { %>
+          <tr>
+            <td><%= order.order_id %></td>
+            <td><%= order.name %></td>
+            <td><%= (order.price_in_cents)/100 %> $</td>
+          </tr>
 
       <% }); %>
 
@@ -51,3 +50,5 @@
 </body>
 
 </html>
+
+
