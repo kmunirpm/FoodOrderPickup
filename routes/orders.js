@@ -7,7 +7,19 @@
 
 const express = require("express");
 const router = express.Router();
+
 let shoppingCart = {};
+
+const formatDate = function(date) {
+  console.log('date:', date);
+  let dateOptions = { month: 'long', day: 'numeric', year: 'numeric' };
+
+  let dateFormatter = new Intl.DateTimeFormat('en-US', dateOptions);
+  let dateAsFormattedString = dateFormatter.format(new Date(date));
+  console.log('dateAsFormattedString:', dateAsFormattedString);
+  return dateAsFormattedString;
+
+}
 
 module.exports = (db) => {
   // GET details of the selected order
@@ -17,7 +29,8 @@ module.exports = (db) => {
     )
       .then((data) => {
         const orders = data.rows;
-        console.log('orders:', orders);
+        // console.log('orders:', orders);
+        console.log('shoppingCart: ', shoppingCart);
         res.render("orders_selected", { orders, shoppingCart });
       })
       .catch((err) => {
@@ -30,7 +43,16 @@ module.exports = (db) => {
     db.query(`SELECT * FROM orders WHERE user_id = ${req.params.id};`)
       .then((data) => {
         const orders = data.rows;
-        res.render("orders_users", {orders});
+        console.log('orders:', orders);
+        console.log('shoppingCart: ', shoppingCart);
+        let formattedOrders = orders.map((order) => {
+          console.log(order);
+          return {
+            formattedDate: formatDate(order.date),
+            ...order
+          }
+        })
+        res.render("orders_users", {orders:formattedOrders, shoppingCart});
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });

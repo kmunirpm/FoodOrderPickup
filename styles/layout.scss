@@ -130,10 +130,17 @@ main {
     border-radius: 5%;
   }
 
+  // Menu images on homepage
   .menu-image {
     width: 400px;
     height: 300px;
     margin-top: 5%;
+  }
+
+  // Menu images once ordered (orders_selected.ejs)
+  .menu-image-ordered {
+    width: 200px;
+    height: 150px;
   }
 
   .menu-price-and-add {
@@ -157,7 +164,6 @@ main {
   }
 
   // SECTION 3
-  // Table in user_orders.ejs
   table {
     font-family: arial, sans-serif;
     border-collapse: collapse;
