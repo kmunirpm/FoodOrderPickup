@@ -186,6 +186,12 @@ main {
     background-color: rgb(236, 227, 215);
   }
 
+  .page-title{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+
 }
 
 

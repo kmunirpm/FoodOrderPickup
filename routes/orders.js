@@ -17,7 +17,8 @@ module.exports = (db) => {
     )
       .then((data) => {
         const orders = data.rows;
-        res.render("orders_selected", { orders });
+        console.log('orders:', orders);
+        res.render("orders_selected", { orders, shoppingCart });
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });

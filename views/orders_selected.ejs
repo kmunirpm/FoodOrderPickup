@@ -1,54 +1,77 @@
+<%
+const ToCurrency = function(number) {
+  return Intl.NumberFormat('en-IN', { style: 'currency', currency: 'CAD' }).format(number, 2);
+}
+%>
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>Food To Go</title>
 
-<head>
-  <title>Food To Go</title>
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
-  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/main.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
+  </head>
 
-  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  <script type="text/javascript" src="/scripts/app.js"></script>
-</head>
+  <body>
+    <!-- This brings in the ejs from partials/_header.ejs -->
+    <%- include('partials/_header') %>
+    <main>
+      <!-- SECTION order_selected.ejs -->
+      <div class="page-title">
+        <h1>Order Summary</h1>
+        <h2>Your Order is Confirmed!</h2>
+      </div>
+      <% if(Object.keys(shoppingCart).length) { %>
+      <!-- Table for Shopping cart -->
+      <table>
+        <tr class="table-title">
+          <td>Product</td>
+          <td>Price</td>
+          <td>Quantity</td>
+          <td>Sub Total</td>
+          <td>Status</td>
+        </tr>
+        <% let ordertotal = 0;
+           for(const key in shoppingCart) {
+             let runningtotal = shoppingCart[key].qty*(shoppingCart[key].price_in_cents/100);
+             ordertotal += runningtotal; %>
+        <tr>
+          <td>
+            <h4><%= shoppingCart[key].name %></h4>
+            <img
+              class="menu-image"
+              src="<%= shoppingCart[key].picture_url %>"
+              alt="menu1"
+            />
+          </td>
+          <td><%= ToCurrency(shoppingCart[key].price_in_cents/100) %></td>
 
-<body>
-  <!-- This brings in the ejs from partials/_header.ejs -->
-  <%- include('partials/_header') %>
-  <main>
-<!-- SECTION 3 -->
-<div class="page-title">
-  <h1>Your Orders</h1>
-</div>
+            <!-- Getthing the quantity of each menu item -->
+            <td>
+              <%= shoppingCart[key].qty %>
+            </td>
+            <td>
+              <%= ToCurrency(runningtotal); %>
+            </td>
+            <td></td>
 
-    <!-- Table for User Orders -->
-    <table>
-      <tr class="table-title">
-        <td>Order Number</td>
-        <td>Description</td>
-        <td>Total</td>
-        <td>More Info</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>Text About Order</td>
-        <td>$10.00</td>
-        <td><button type="submit" class="detail-order-button">Detail About Order</button></td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Text About Order</td>
-        <td>$20.00</td>
-        <td><button type="submit" class="detail-order-button">Detail About Order</button></td>
-      </tr>
-    </table>
-
-  </main>
-
-
-
-
-</body>
-
+        </tr>
+        <% } %>
+        <form method="POST" action="/orders/ordered">
+          <tr>
+            <td colspan="3"></td>
+            <td><%= ToCurrency(ordertotal); %></td>
+            <td><input type="submit" name="order" value="Place Order" /></td></tr>
+        </form>
+      </table>
+      <% } else { %>
+        <h3>Shopping cart is empty.</h3>
+      <% } %>
+    </main>
+  </body>
 </html>
