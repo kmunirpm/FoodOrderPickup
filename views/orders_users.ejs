@@ -1,54 +1,61 @@
+<%
+const ToCurrency = function(number) {
+  return Intl.NumberFormat('en-IN', { style: 'currency', currency: 'CAD' }).format(number, 2);
+}
+%>
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>Food To Go</title>
 
-<head>
-  <title>Food To Go</title>
+    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/main.css" type="text/css" />
+    <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
-  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/main.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+    <!-- External Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnHg4CGR2D7kSs0v4LLanw2qksYuRlEzO+tcaEPQogQ0KaoGN26/zrn20ImR1DfuLWnOo7aBA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  <script type="text/javascript" src="/scripts/app.js"></script>
-</head>
+    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+    <script type="text/javascript" src="/scripts/app.js"></script>
+  </head>
 
-<body>
-  <!-- This brings in the ejs from partials/_header.ejs -->
-  <%- include('partials/_header') %>
-  <main>
-<!-- SECTION 3 -->
-<div class="page-title">
-  <h1>Your Orders</h1>
-</div>
+  <body>
+    <!-- This brings in the ejs from partials/_header.ejs -->
+    <%- include('partials/_header') %>
+    <main>
+      <!-- SECTION order_selected.ejs -->
+      <div class="page-title">
+        <h1>All Your Orders</h1>
+      </div>
 
-    <!-- Table for User Orders -->
-    <table>
-      <tr class="table-title">
-        <td>Order Number</td>
-        <td>Description</td>
-        <td>Total</td>
-        <td>More Info</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>Text About Order</td>
-        <td>$10.00</td>
-        <td><button type="submit" class="detail-order-button">Detail About Order</button></td>
-      </tr>
-      <tr>
-        <td>2</td>
-        <td>Text About Order</td>
-        <td>$20.00</td>
-        <td><button type="submit" class="detail-order-button">Detail About Order</button></td>
-      </tr>
-    </table>
+      <!-- Table for Shopping cart -->
+      <table>
+        <tr class="table-title">
+          <td>Order Number</td>
+          <td>Total</td>
+          <td>Status</td>
+          <td>Date</td>
+          <td>More Info</td>
+        </tr>
+        <!-- Getting Values from orders  -->
+        <% if(orders) { %>
+          <% for(const order of orders) { %>
 
-  </main>
-
-
+          <tr>
+            <!-- Show the Order Number -->
+            <td><h4><%= order.id %></h4></td>
+            <td><h4><%= ToCurrency(order.total) %></h4></td>
+            <td><h4><%= order.status %></h4></td>
+            <td><h4><%= order.formattedDate %></h4></td>
+            <form method="POST" action="/orders/selected/:id">
+              <td><button type="submit" class="detail-order-button">Detail About Order</button></td>
+            </form>
+          </tr>
+        <% } %>
+        <% } %>
 
 
-</body>
-
+    </main>
+  </body>
 </html>
