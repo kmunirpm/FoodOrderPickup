@@ -11,13 +11,13 @@ let shoppingCart = {};
 
 module.exports = (db) => {
   // GET details of the selected order
-  router.get("/details/:id", (req, res) => {
+  router.get("/selected/:id", (req, res) => {
     db.query(
       `SELECT * FROM orders JOIN ordered_items ON orders.id = order_id WHERE order_id = ${req.params.id};`
     )
       .then((data) => {
         const orders = data.rows;
-        res.json({ orders });
+        res.render("orders_selected", { orders });
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
@@ -29,7 +29,7 @@ module.exports = (db) => {
     db.query(`SELECT * FROM orders WHERE user_id = ${req.params.id};`)
       .then((data) => {
         const orders = data.rows;
-        res.json({ orders });
+        res.render("orders_users", {orders});
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
@@ -45,7 +45,7 @@ module.exports = (db) => {
     )
       .then((data) => {
         const orders = data.rows;
-        res.json({ orders });
+        return res.render("orders_ordered")
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });

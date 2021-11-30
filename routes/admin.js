@@ -15,7 +15,7 @@ module.exports = (db) => {
     db.query(`SELECT * FROM orders ORDER BY date DESC;`)
       .then((data) => {
         const menu = data.rows;
-        res.json({ menu });
+        res.render("admin_orders", { menu });
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
@@ -27,7 +27,7 @@ module.exports = (db) => {
     db.query(`SELECT * FROM orders JOIN ordered_items ON orders.id = order_id WHERE order_id = ${req.params.id};`)
       .then((data) => {
         const menu = data.rows;
-        res.json({ menu });
+        res.render("admin_order_selected", { menu });
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });

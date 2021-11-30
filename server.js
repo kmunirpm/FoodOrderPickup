@@ -68,7 +68,7 @@ app.get("/", (req, res) => {
   db.query(`SELECT * FROM menu_items LIMIT 6;`)
   .then(data => {
     const menu = data.rows;
-    res.render("index", {menu:menu});
+    res.render("index", {menu});
   })
   .catch(err => {
     res
