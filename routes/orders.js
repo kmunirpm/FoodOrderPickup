@@ -25,11 +25,14 @@ module.exports = (db) => {
   // GET details of the selected order
   router.get("/selected/:id", (req, res) => {
     db.query(
-      `SELECT * FROM orders JOIN ordered_items ON orders.id = order_id WHERE order_id = ${req.params.id};`
+      `SELECT * FROM orders
+      JOIN ordered_items ON orders.id = order_id
+      JOIN menu_items ON menu_items.id =  menu_item_id
+      WHERE order_id = ${req.params.id};`
     )
       .then((data) => {
         const orders = data.rows;
-        // console.log('orders:', orders);
+        console.log('orders for selected/:id:', orders);
         console.log('shoppingCart: ', shoppingCart);
         res.render("orders_selected", { orders, shoppingCart });
       })

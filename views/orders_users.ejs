@@ -48,7 +48,7 @@ const ToCurrency = function(number) {
             <td><h4><%= ToCurrency(order.total) %></h4></td>
             <td><h4><%= order.status %></h4></td>
             <td><h4><%= order.formattedDate %></h4></td>
-            <form method="POST" action="/orders/selected/:id">
+            <form method="GET" action="/orders/selected/1">
               <td><button type="submit" class="detail-order-button">Detail About Order</button></td>
             </form>
           </tr>
