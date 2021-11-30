@@ -38,14 +38,24 @@ module.exports = (db) => {
 
   //POST order is placed. record stored in database. sms sent to owner
   router.post("/ordered", (req, res) => {
-    console.log(req.query);
-    db.query(
-      `INSERT INTO orders (user_id, total, date) values ($1, $2, $3);
-                INSERT INTO ordered_items (order_id, menu_item_id, quantity) values ($1, $2, $3)`
-    )
+    let val = '';
+    let params = [];
+    params.push(1);
+    let order_total = 0;
+    for (const key in shoppingCart) {
+      val += `((select id from inserted_id), ${shoppingCart[key].id}, ${shoppingCart[key].qty}), `
+      order_total += shoppingCart[key].qty*(shoppingCart[key].price_in_cents/100)
+    };
+    params.push(order_total);
+    val = val.substring(0, val.length - 2);
+
+    const queryString = `WITH inserted_id AS (INSERT INTO orders (user_id, total, date, status) values ($1, $2, Now(), 'Placed') RETURNING id)
+                        INSERT INTO ordered_items (order_id, menu_item_id, quantity) VALUES ${val} RETURNING (select id from inserted_id)`;
+    db.query(queryString, params)
       .then((data) => {
-        const orders = data.rows;
-        return res.render("orders_ordered")
+        const orders = data.rows[0];
+        shoppingCart = {};
+        return res.render("orders_ordered", {orders});
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
@@ -54,7 +64,6 @@ module.exports = (db) => {
 
   //view the cart
   router.get("/cart", (req, res) => {
-    console.log(shoppingCart);
     return res.render("orders_cart", { shoppingCart });
   });
 
@@ -67,8 +76,10 @@ module.exports = (db) => {
         if (typeof shoppingCart[menu.id] === "undefined") {
           shoppingCart[menu.id] = menu;
           shoppingCart[menu.id].qty = 1;
+          shoppingCart.counter = 1;
         } else {
           shoppingCart[menu.id].qty += 1;
+          //shoppingCart.counter =
         }
         res.redirect("/");
       })
@@ -79,7 +90,6 @@ module.exports = (db) => {
 
   //modifies the shopping cart
   router.post("/cart/modify", (req, res) => {
-    console.log(req.body);
     if (typeof req.body.edit !== "undefined") {
       shoppingCart[req.body.pid].qty = req.body.qty;
     } else if (typeof req.body.delete !== "undefined") {
