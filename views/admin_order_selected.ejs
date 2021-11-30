@@ -19,29 +19,28 @@
   <main>
 <!-- SECTION 3 -->
 <div class="page-title">
-  <h1>Your Orders</h1>
+  <h1>Order details</h1>
 </div>
 
     <!-- Table for User Orders -->
     <table>
       <tr class="table-title">
-        <td>Order Number</td>
-        <td>Description</td>
-        <td>Total</td>
-        <td>More Info</td>
+        <td>Menu-item id</td>
+        <td>Menu-item name</td>
+        <td>Item Price</td>
       </tr>
+
+        <% console.log('orders: ', orders)%>
+        <% orders.forEach(function(orders) { %>
+
       <tr>
-        <td>1</td>
-        <td>Text About Order</td>
-        <td>$10.00</td>
-        <td><button type="submit" class="detail-order-button">Detail About Order</button></td>
+        <td><%= orders.menu_item_id %></td>
+        <td></td>
+        <td></td>
       </tr>
-      <tr>
-        <td>2</td>
-        <td>Text About Order</td>
-        <td>$20.00</td>
-        <td><button type="submit" class="detail-order-button">Detail About Order</button></td>
-      </tr>
+
+      <% }); %>
+
     </table>
 
   </main>
