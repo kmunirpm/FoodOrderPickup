@@ -17,10 +17,10 @@ of a ficticious restaurant can visit it's website, select one or more dishes and
 ![""]()
 
 ### User stories
-!["User Stories"]()
+!["User Stories"](https://github.com/kmunirpm/FoodOrderPickup/blob/master/docs/user-stories.png?raw=true)
 
 ## Database Design
-!["Entity Relation Diagram"]()
+!["Entity Relation Diagram"](https://github.com/kmunirpm/FoodOrderPickup/blob/master/docs/erd.png?raw=true)
 
 
 ## Dependencies

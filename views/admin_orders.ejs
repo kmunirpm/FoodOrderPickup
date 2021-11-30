@@ -17,36 +17,41 @@
   <!-- This brings in the ejs from partials/_header.ejs -->
   <%- include('partials/_header') %>
   <main>
-<!-- SECTION 3 -->
-<div class="page-title">
-  <h1>Your Orders</h1>
-</div>
+    <!-- SECTION 3 -->
+    <div class="page-title">
+      <h1>All Orders</h1>
+    </div>
 
     <!-- Table for User Orders -->
     <table>
       <tr class="table-title">
         <td>Order Number</td>
-        <td>Description</td>
         <td>Total</td>
-        <td>More Info</td>
+        <td>Date</td>
+        <td>Status</td>
       </tr>
       <tr>
-        <td>1</td>
-        <td>Text About Order</td>
-        <td>$10.00</td>
-        <td><button type="submit" class="detail-order-button">Detail About Order</button></td>
+        <% console.log('orders: ', orders)%>
+        <% orders.forEach(function(orders) { %>
+        <td><%= orders.id %></td>
+        <td><%= orders.total %> $</td>
+        <td><%= (new Date(orders.date)).toLocaleDateString("en-US")%></td>
+
+        <!-- <form button method="GET" action="/order/:id/"> -->
+          <td>
+            <a href="/admin/order/<%=orders.id%>" class="btn btn-primary">Order Details</a>
+            <!-- <button value="<%= orders.id %>" type="submit" class="detail-order-button">Detail About Order</button> -->
+          </td>
+        <!-- </form> -->
       </tr>
       <tr>
-        <td>2</td>
-        <td>Text About Order</td>
-        <td>$20.00</td>
-        <td><button type="submit" class="detail-order-button">Detail About Order</button></td>
+
+        <% }); %>
+
       </tr>
     </table>
 
   </main>
-
-
 
 
 </body>
