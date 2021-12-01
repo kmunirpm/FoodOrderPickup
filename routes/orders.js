@@ -7,22 +7,41 @@
 
 const express = require("express");
 const router = express.Router();
+<<<<<<< HEAD
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const client = require('twilio')(accountSid, authToken);
 
+=======
+>>>>>>> origin/master
 
 let shoppingCart = {};
+
+const formatDate = function(date) {
+  console.log('date:', date);
+  let dateOptions = { month: 'long', day: 'numeric', year: 'numeric' };
+
+  let dateFormatter = new Intl.DateTimeFormat('en-US', dateOptions);
+  let dateAsFormattedString = dateFormatter.format(new Date(date));
+  console.log('dateAsFormattedString:', dateAsFormattedString);
+  return dateAsFormattedString;
+
+}
 
 module.exports = (db) => {
   // GET details of the selected order
   router.get("/selected/:id", (req, res) => {
     db.query(
-      `SELECT * FROM orders JOIN ordered_items ON orders.id = order_id WHERE order_id = ${req.params.id};`
+      `SELECT * FROM orders
+      JOIN ordered_items ON orders.id = order_id
+      JOIN menu_items ON menu_items.id =  menu_item_id
+      WHERE order_id = ${req.params.id};`
     )
       .then((data) => {
         const orders = data.rows;
-        res.render("orders_selected", { orders });
+        console.log('orders for selected/:id:', orders);
+        console.log('shoppingCart: ', shoppingCart);
+        res.render("orders_selected", { orders, shoppingCart });
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
@@ -34,7 +53,16 @@ module.exports = (db) => {
     db.query(`SELECT * FROM orders WHERE user_id = ${req.params.id};`)
       .then((data) => {
         const orders = data.rows;
-        res.render("orders_users", {orders});
+        console.log('orders:', orders);
+        console.log('shoppingCart: ', shoppingCart);
+        let formattedOrders = orders.map((order) => {
+          console.log(order);
+          return {
+            formattedDate: formatDate(order.date),
+            ...order
+          }
+        })
+        res.render("orders_users", {orders:formattedOrders, shoppingCart});
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
