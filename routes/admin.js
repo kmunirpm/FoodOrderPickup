@@ -42,7 +42,17 @@ module.exports = (db) => {
 
 
 
-
+  //POST owner changes status of order. sms sent to customer with pickup time
+  router.post("/order/:id", (req, res) => {
+    db.query(`UPDATE orders SET ready_time_seconds = ${req.body.time_in_sec}
+              WHERE id = ${req.body.oid};`)
+      .then((data) => {
+        res.redirect("/admin/order/" + req.body.oid);
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  });
 
 
   //POST owner changes status of order. sms sent to customer with pickup time

@@ -1,4 +1,8 @@
-<!DOCTYPE html>
+<%
+const ToCurrency = function(number) {
+  return Intl.NumberFormat('en-IN', { style: 'currency', currency: 'CAD' }).format(number, 2);
+}
+%><!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -57,7 +61,7 @@
               <img class="menu-image" src="<%= menu.picture_url %>" alt="menu1" />
               <div><%= menu.description %></div>
               <div class="menu-price-and-add">
-                <h3>$<%= menu.price_in_cents/100 %></h3>
+                <h3>$<%= ToCurrency(menu.price_in_cents/100) %></h3>
                 <form method="POST" action="/orders/cart/"><input type="hidden" name="pid" value="<%= menu.id %>"><button type="submit" class="add-button">+</button></form>
               </div>
             </div>

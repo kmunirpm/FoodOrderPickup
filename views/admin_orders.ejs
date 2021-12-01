@@ -1,3 +1,7 @@
+<%
+const ToCurrency = function(number) {
+  return Intl.NumberFormat('en-IN', { style: 'currency', currency: 'CAD' }).format(number, 2);
+}%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +23,7 @@
   <main>
     <!-- SECTION 3 -->
     <div class="page-title">
-      <h1>All Orders</h1>
+      <h1>Admin View - All Orders</h1>
     </div>
 
     <!-- Table for User Orders -->
@@ -31,10 +35,9 @@
         <td>Status</td>
       </tr>
       <tr>
-        <% console.log('orders: ', orders)%>
         <% orders.forEach(function(orders) { %>
         <td><%= orders.id %></td>
-        <td><%= orders.total %> $</td>
+        <td><%= ToCurrency(orders.total) %></td>
         <td><%= (new Date(orders.date)).toLocaleDateString("en-US")%></td>
 
         <!-- <form button method="GET" action="/order/:id/"> -->

@@ -6,29 +6,46 @@
  */
 
 const express = require("express");
+const orderdetails = require("./orderdetails");
 const router = express.Router();
-<<<<<<< HEAD
 const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
-const client = require('twilio')(accountSid, authToken);
-
-=======
->>>>>>> origin/master
+const client = require("twilio")(accountSid, authToken);
 
 let shoppingCart = {};
 
-const formatDate = function(date) {
-  console.log('date:', date);
-  let dateOptions = { month: 'long', day: 'numeric', year: 'numeric' };
+const formatDate = function (date) {
+  console.log("date:", date);
+  let dateOptions = { month: "long", day: "numeric", year: "numeric" };
 
-  let dateFormatter = new Intl.DateTimeFormat('en-US', dateOptions);
+  let dateFormatter = new Intl.DateTimeFormat("en-US", dateOptions);
   let dateAsFormattedString = dateFormatter.format(new Date(date));
-  console.log('dateAsFormattedString:', dateAsFormattedString);
+  console.log("dateAsFormattedString:", dateAsFormattedString);
   return dateAsFormattedString;
-
-}
+};
 
 module.exports = (db) => {
+  // GET details of the selected order
+  router.get("/user/:id", (req, res) => {
+    db.query(`SELECT * FROM orders WHERE user_id = ${req.params.id};`)
+      .then((data) => {
+        const orders = data.rows;
+        console.log("orders:", orders);
+        console.log("shoppingCart: ", shoppingCart);
+        let formattedOrders = orders.map((order) => {
+          console.log(order);
+          return {
+            formattedDate: formatDate(order.date),
+            ...order,
+          };
+        });
+        res.render("orders_users", { orders: formattedOrders, shoppingCart });
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  });
+
   // GET details of the selected order
   router.get("/selected/:id", (req, res) => {
     db.query(
@@ -39,30 +56,9 @@ module.exports = (db) => {
     )
       .then((data) => {
         const orders = data.rows;
-        console.log('orders for selected/:id:', orders);
-        console.log('shoppingCart: ', shoppingCart);
+        console.log("orders for selected/:id:", orders);
+        console.log("shoppingCart: ", shoppingCart);
         res.render("orders_selected", { orders, shoppingCart });
-      })
-      .catch((err) => {
-        res.status(500).json({ error: err.message });
-      });
-  });
-
-  //GET all the orders for selected user
-  router.get("/user/:id", (req, res) => {
-    db.query(`SELECT * FROM orders WHERE user_id = ${req.params.id};`)
-      .then((data) => {
-        const orders = data.rows;
-        console.log('orders:', orders);
-        console.log('shoppingCart: ', shoppingCart);
-        let formattedOrders = orders.map((order) => {
-          console.log(order);
-          return {
-            formattedDate: formatDate(order.date),
-            ...order
-          }
-        })
-        res.render("orders_users", {orders:formattedOrders, shoppingCart});
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
@@ -71,14 +67,15 @@ module.exports = (db) => {
 
   //POST order is placed. record stored in database. sms sent to owner
   router.post("/ordered", (req, res) => {
-    let val = '';
+    let val = "";
     let params = [];
     params.push(1);
     let order_total = 0;
     for (const key in shoppingCart) {
-      val += `((select id from inserted_id), ${shoppingCart[key].id}, ${shoppingCart[key].qty}), `
-      order_total += shoppingCart[key].qty*(shoppingCart[key].price_in_cents/100)
-    };
+      val += `((select id from inserted_id), ${shoppingCart[key].id}, ${shoppingCart[key].qty}), `;
+      order_total +=
+        shoppingCart[key].qty * (shoppingCart[key].price_in_cents / 100);
+    }
     params.push(order_total);
     val = val.substring(0, val.length - 2);
 
@@ -88,14 +85,17 @@ module.exports = (db) => {
       .then((data) => {
         const orders = data.rows[0];
         client.messages
-        .create({
-          body: 'Thankyou for your order. Your order # is ' + orders.id,
-          from: '+18022558617', //valid Twilio number
-          to: '+16478741655'
-        })
-        .then(message => console.log(message.sid));
+          .create({
+            body: `New order placed. Order # is ${orders.id} \n
+                   Order details\n
+                   ------------------------------\n
+                   ${JSON.stringify(shoppingCart)}`,
+            from: "+18022558617", //valid Twilio number
+            to: "+16478741655",
+          })
+          .then((message) => console.log(message.sid));
         shoppingCart = {};
-        return res.render("orders_ordered", {orders});
+        return res.render("orders_ordered", { orders });
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
