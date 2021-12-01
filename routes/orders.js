@@ -7,6 +7,11 @@
 
 const express = require("express");
 const router = express.Router();
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = require('twilio')(accountSid, authToken);
+
+
 let shoppingCart = {};
 
 module.exports = (db) => {
@@ -54,6 +59,13 @@ module.exports = (db) => {
     db.query(queryString, params)
       .then((data) => {
         const orders = data.rows[0];
+        client.messages
+        .create({
+          body: 'Thankyou for your order. Your order # is ' + orders.id,
+          from: '+18022558617', //valid Twilio number
+          to: '+16478741655'
+        })
+        .then(message => console.log(message.sid));
         shoppingCart = {};
         return res.render("orders_ordered", {orders});
       })
@@ -69,14 +81,12 @@ module.exports = (db) => {
 
   //add item to the cart
   router.post("/cart", (req, res) => {
-    req.body.longURL;
     db.query(`SELECT * FROM menu_items where id = ${req.body.pid};`)
       .then((data) => {
         const menu = data.rows[0];
         if (typeof shoppingCart[menu.id] === "undefined") {
           shoppingCart[menu.id] = menu;
           shoppingCart[menu.id].qty = 1;
-          shoppingCart.counter = 1;
         } else {
           shoppingCart[menu.id].qty += 1;
           //shoppingCart.counter =
