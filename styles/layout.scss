@@ -11,6 +11,7 @@ nav {
   justify-content: space-between;
   height: 120px;
   background-color: #8a7039;
+  // background-color: #968050;
   color: #FFFFFF;
   z-index: 10;
   position: fixed;
@@ -117,15 +118,15 @@ main {
       rgb(26, 27, 27) 0%,
       rgb(26, 27, 27) 20%,
       rgb(26, 27, 27) 34%,
-      rgb(26, 27, 27) 59%,
-      rgba(163, 208, 219, 1) 74%,
-      rgba(163, 208, 219, 1) 100%
+      rgb(24, 20, 16) 59%,
+      rgb(150, 128, 103) 74%,
+      rgb(240, 218, 193) 100%
     );
   }
 
   .menu {
-    background-color:rgb(198, 222, 238);
-    height: 500px;
+    background-color:rgb(216, 214, 211);
+    height: 550px;
     text-align: center;
     border-radius: 5%;
   }
@@ -151,11 +152,14 @@ main {
   }
 
   .add-button {
-    margin-top: 10px;
-    width: 30px;
-    height: 30px;
-    border-radius: 30%;
-    background-color: rgb(236, 227, 215);
+    // margin-top: 10px;
+    margin: 10px 10px;
+    margin-bottom: 20px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #b39f75;
+    font: 25px Arial, sans-serif;
   }
 
   ul {
@@ -188,8 +192,10 @@ main {
   }
 
   .detail-order-button {
-    border-radius: 5%;
-    background-color: rgb(236, 227, 215);
+    border-radius: 10%;
+    width: 175px;
+    height: 50px;
+    background-color: rgb(215, 215, 236);
   }
 
   .page-title{
