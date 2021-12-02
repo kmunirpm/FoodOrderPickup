@@ -33,13 +33,14 @@ const ToCurrency = function(number) {
         <td>Total</td>
         <td>Date</td>
         <td>Status</td>
+        <td>Details</td>
       </tr>
       <tr>
         <% orders.forEach(function(orders) { %>
         <td><%= orders.id %></td>
         <td><%= ToCurrency(orders.total) %></td>
         <td><%= (new Date(orders.date)).toLocaleDateString("en-US")%></td>
-
+        <td><%= orders.status %></td>
         <!-- <form button method="GET" action="/order/:id/"> -->
           <td>
             <a href="/admin/order/<%=orders.id%>" class="btn btn-primary">Order Details</a>

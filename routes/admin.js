@@ -7,11 +7,16 @@
 
 const express = require("express");
 const router = express.Router();
+const accountSid = process.env.TWILIO_ACCOUNT_SID;
+const authToken = process.env.TWILIO_AUTH_TOKEN;
+const client = require("twilio")(accountSid, authToken);
+
+
 module.exports = (db) => {
 
   //GET all the orders listed for admin
   router.get("/", (req, res) => {
-    db.query(`SELECT * FROM orders;`)
+    db.query(`SELECT * FROM orders order by date desc, id asc;`)
       .then((data) => {
         const orders = data.rows;
         res.render("admin_orders", { orders});
@@ -22,8 +27,6 @@ module.exports = (db) => {
   });
 
 
-
-
   //GET the orders selected by admin
   router.get("/order/:id", (req, res) => {
     db.query(`SELECT * FROM orders
@@ -32,7 +35,6 @@ module.exports = (db) => {
               WHERE order_id = ${req.params.id};`)
       .then((data) => {
         const orders = data.rows;
-        console.log("TEST")
         res.render("admin_order_selected", { orders });
       })
       .catch((err) => {
@@ -41,13 +43,22 @@ module.exports = (db) => {
   });
 
 
-
   //POST owner changes status of order. sms sent to customer with pickup time
   router.post("/order/:id", (req, res) => {
-    db.query(`UPDATE orders SET ready_time_seconds = ${req.body.time_in_sec}
-              WHERE id = ${req.body.oid};`)
+    console.log(req.body);
+    db.query(`UPDATE orders SET status = 'Ready', msg_counter=msg_counter+1, msgtime=Now(), ready_time_seconds = ${req.body.time_in_sec}
+              WHERE id = ${req.body.oid} RETURNING msg_counter;`)
       .then((data) => {
-        res.redirect("/admin/order/" + req.body.oid);
+        const orders = data.rows;
+        client.messages
+          .create({
+            body: `Order status updated for OrderID: ${req.body.oid}. Please pick you order after: ${req.body.time_in_sec}/60 mins.` ,
+            from: "+18022558617", //valid Twilio number
+            to: "+16478741655", //customer phone #
+          })
+          .then((message) => console.log(message.id));
+        //res.redirect("/admin/order/" + req.body.oid);
+        res.status(200).send(orders);
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
@@ -56,14 +67,11 @@ module.exports = (db) => {
 
 
   //POST owner changes status of order. sms sent to customer with pickup time
-  router.post("/order/:id/status", (req, res) => {
-    db.query(
-      `INSERT INTO orders (user_id, total, date) values ($1, $2, $3);
-                INSERT INTO ordered_items (order_id, menu_item_id, quantity) values ($1, $2, $3)`
-    )
+  router.post("/order/:id/markcompleted", (req, res) => {
+    db.query(`UPDATE orders SET status = 'Completed'
+              WHERE id = ${req.body.oid};`)
       .then((data) => {
-        const orders = data.rows;
-        res.json({ orders });
+        res.redirect('/admin/order/' + req.body.oid);
       })
       .catch((err) => {
         res.status(500).json({ error: err.message });
@@ -72,3 +80,4 @@ module.exports = (db) => {
 
   return router;
 };
+0000

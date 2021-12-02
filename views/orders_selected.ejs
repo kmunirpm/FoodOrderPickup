@@ -30,7 +30,7 @@ style: 'currency', currency: 'CAD' }).format(number, 2); } %>
       <!-- SECTION order_selected.ejs -->
       <div class="page-title">
         <h1>Order Summary</h1>
-        <h2>Your Order is Confirmed!</h2>
+        <h2>Your Order (ID: <%= orders[0].order_id %>) is <%= orders[0].status %>!</h2>
       </div>
 
       <!-- Table for Shopping cart -->
@@ -72,9 +72,14 @@ style: 'currency', currency: 'CAD' }).format(number, 2); } %>
             </tr>
             <% } %>
           <tr>
-            <td colspan="3"></td>
+            <td colspan="3">
+              <% if(orders[0].status === "Ready") { %>
+                Pick up at: <%= new Date(new Date(Date.parse(orders[0].msgtime)).getTime() + orders[0].ready_time_seconds) %>
+              <% } %>
+            </td>
             <td><%= ToCurrency(orderTotal); %></td>
-            <td>Confirmed</td>
+            <td>
+            </td>
           </tr>
         </table>
       <% } %>
