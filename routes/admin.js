@@ -45,7 +45,7 @@ module.exports = (db) => {
 
   //POST owner changes status of order. sms sent to customer with pickup time
   router.post("/order/:id", (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     db.query(`UPDATE orders SET status = 'Ready', msg_counter=msg_counter+1, msgtime=Now(), ready_time_seconds = ${req.body.time_in_sec}
               WHERE id = ${req.body.oid} RETURNING msg_counter;`)
       .then((data) => {
