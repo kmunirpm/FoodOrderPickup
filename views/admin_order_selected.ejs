@@ -7,7 +7,7 @@ const ToCurrency = function(number) {
 <html lang="en">
 
 <head>
-  <title>Food To Go</title>
+  <title>BonAppetite - Food To Go</title>
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
@@ -22,12 +22,9 @@ const ToCurrency = function(number) {
   <!-- This brings in the ejs from partials/_header.ejs -->
   <%- include('partials/_header') %>
   <main>
-    <script>
-      $("#counter").text("1");
-    </script>
 <!-- SECTION 3 -->
 <div class="page-title">
-  <h1>Admin View - Details for Order ID: <%= orders[0].order_id %></h1>
+  <h1>Admin View - Details for Order ID: (<%= orders[0].order_id %>) & Customer: (<%= orders[0].uname %>)</h1>
 </div>
 
     <!-- Table for User Orders -->
@@ -47,10 +44,10 @@ const ToCurrency = function(number) {
           </tr>
 
       <% }); %>
-      <tr><td colspan="2"></td><td>Total: </td><td><b><%= ToCurrency(orders[0].total) %></b></td></tr>
+      <tr><td colspan="2"></td><td>Total: </td><td><b><%= ToCurrency(orders[0].total/100) %></b></td></tr>
     </table>
     <br/>
-    <div id="msg"></div><div>
+    <div id="msg">Messages sent to customer: <%= orders[0].msg_counter %></div><div>
     <% if(orders[0].status !== "Completed") { %>
       <center><form method="POST" action="/admin/order/<%= orders[0].order_id %>" id="statuschange">
       <input type="text" value="" name="time_in_sec">
@@ -80,7 +77,4 @@ const ToCurrency = function(number) {
     });
   </script>
 </body>
-
 </html>
-
-

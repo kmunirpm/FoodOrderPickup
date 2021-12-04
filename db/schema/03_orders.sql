@@ -10,5 +10,5 @@ CREATE TABLE orders (
   status VARCHAR(50) DEFAULT 'Received',
   ready_time_seconds INTEGER,
   msg_counter SMALLINT DEFAULT 0,
-  msg_time DATE
+  msgtime DATE
 );

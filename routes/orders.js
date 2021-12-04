@@ -27,13 +27,12 @@ const formatDate = function (date) {
 module.exports = (db) => {
   // GET details of the selected order
   router.get("/user/:id", (req, res) => {
-    db.query(`SELECT * FROM orders WHERE user_id = ${req.params.id};`)
+    db.query(`SELECT * FROM orders WHERE user_id = ${req.params.id} order by id desc, date desc;`)
       .then((data) => {
         const orders = data.rows;
         console.log("orders:", orders);
         console.log("shoppingCart: ", shoppingCart);
         let formattedOrders = orders.map((order) => {
-          console.log(order);
           return {
             formattedDate: formatDate(order.date),
             ...order,
@@ -69,17 +68,17 @@ module.exports = (db) => {
   router.post("/ordered", (req, res) => {
     let val = "";
     let params = [];
-    params.push(1);
+    params.push(1); // user id
     let order_total = 0;
     for (const key in shoppingCart) {
       val += `((select id from inserted_id), ${shoppingCart[key].id}, ${shoppingCart[key].qty}), `;
       order_total +=
-        shoppingCart[key].qty * (shoppingCart[key].price_in_cents / 100);
+        shoppingCart[key].qty * (shoppingCart[key].price_in_cents);
     }
     params.push(order_total);
     val = val.substring(0, val.length - 2);
 
-    const queryString = `WITH inserted_id AS (INSERT INTO orders (user_id, total, date, status) values ($1, $2, Now(), 'Placed') RETURNING id)
+    const queryString = `WITH inserted_id AS (INSERT INTO orders (user_id, total, date, status, msg_counter) values ($1, $2, Now(), 'Placed', 0) RETURNING id)
                         INSERT INTO ordered_items (order_id, menu_item_id, quantity) VALUES ${val} RETURNING (select id from inserted_id)`;
     db.query(queryString, params)
       .then((data) => {

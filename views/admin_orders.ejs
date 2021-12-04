@@ -6,7 +6,7 @@ const ToCurrency = function(number) {
 <html lang="en">
 
 <head>
-  <title>Food To Go</title>
+  <title>BonAppetite - Food To Go</title>
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
@@ -21,15 +21,19 @@ const ToCurrency = function(number) {
   <!-- This brings in the ejs from partials/_header.ejs -->
   <%- include('partials/_header') %>
   <main>
+    <script>
+
+    </script>
     <!-- SECTION 3 -->
     <div class="page-title">
-      <h1>Admin View - All Orders</h1>
+      <h1>Admin - View Orders</h1>
     </div>
-
+    Select Filter: <a href="/admin/">All</a> | <a href="/admin/filter/placed">Placed</a> | <a href="/admin/filter/ready">Ready</a> | <a href="/admin/filter/completed">Completed</a>
     <!-- Table for User Orders -->
     <table>
       <tr class="table-title">
         <td>Order Number</td>
+        <td>Customer</td>
         <td>Total</td>
         <td>Date</td>
         <td>Status</td>
@@ -37,15 +41,16 @@ const ToCurrency = function(number) {
       </tr>
       <tr>
         <% orders.forEach(function(orders) { %>
-        <td><%= orders.id %></td>
-        <td><%= ToCurrency(orders.total) %></td>
+          <td><%= orders.id %></td>
+          <td><%= orders.name %></td>
+        <td><%= ToCurrency(orders.total/100) %></td>
         <td><%= (new Date(orders.date)).toLocaleDateString("en-US")%></td>
         <td><%= orders.status %></td>
         <!-- <form button method="GET" action="/order/:id/"> -->
-          <td>
-            <a href="/admin/order/<%=orders.id%>" class="btn btn-primary">Order Details</a>
-            <!-- <button value="<%= orders.id %>" type="submit" class="detail-order-button">Detail About Order</button> -->
-          </td>
+        <td>
+          <a href="/admin/order/<%=orders.id%>" class="btn btn-primary">Order Details</a>
+          <!-- <button value="<%= orders.id %>" type="submit" class="detail-order-button">Detail About Order</button> -->
+        </td>
         <!-- </form> -->
       </tr>
       <tr>

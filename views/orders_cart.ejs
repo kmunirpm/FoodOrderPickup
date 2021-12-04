@@ -7,7 +7,7 @@ const ToCurrency = function(number) {
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Food To Go</title>
+    <title>BonAppetite - Food To Go</title>
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
@@ -36,10 +36,18 @@ const ToCurrency = function(number) {
           <td>Sub Total</td>
           <td>Delete</td>
         </tr>
+        <script>
+          let c_counter = 0;
+          let print_counter = document.getElementById("counter");
+        </script>
         <% let ordertotal = 0;
            for(const key in shoppingCart) {
              let runningtotal = shoppingCart[key].qty*(shoppingCart[key].price_in_cents/100);
              ordertotal += runningtotal; %>
+             <script>
+              c_counter+= parseInt('<%= shoppingCart[key].qty %>');
+              print_counter.innerHTML = c_counter;
+             </script>
         <tr>
           <td>
             <h4><%= shoppingCart[key].name %></h4>

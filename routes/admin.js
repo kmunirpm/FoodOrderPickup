@@ -16,7 +16,22 @@ module.exports = (db) => {
 
   //GET all the orders listed for admin
   router.get("/", (req, res) => {
-    db.query(`SELECT * FROM orders order by date desc, id asc;`)
+    db.query(`SELECT orders.*, name FROM orders
+              JOIN users ON users.id = user_id order by orders.id desc, date desc;`)
+      .then((data) => {
+        const orders = data.rows;
+        res.render("admin_orders", { orders});
+      })
+      .catch((err) => {
+        res.status(500).json({ error: err.message });
+      });
+  });
+
+  //GET all the orders listed for admin
+  router.get("/filter/:filter", (req, res) => {
+    db.query(`SELECT orders.*, name FROM orders
+              JOIN users ON users.id = user_id where LOWER(status) = LOWER('${req.params.filter}')
+    ORDER BY  id desc, date desc;`)
       .then((data) => {
         const orders = data.rows;
         res.render("admin_orders", { orders});
@@ -29,7 +44,8 @@ module.exports = (db) => {
 
   //GET the orders selected by admin
   router.get("/order/:id", (req, res) => {
-    db.query(`SELECT * FROM orders
+    db.query(`SELECT *, users.name as uname FROM orders
+              JOIN users ON users.id = user_id
               JOIN ordered_items ON orders.id = order_id
               JOIN menu_items ON menu_items.id = menu_item_id
               WHERE order_id = ${req.params.id};`)
@@ -45,7 +61,6 @@ module.exports = (db) => {
 
   //POST owner changes status of order. sms sent to customer with pickup time
   router.post("/order/:id", (req, res) => {
-    console.log(req.body);
     db.query(`UPDATE orders SET status = 'Ready', msg_counter=msg_counter+1, msgtime=Now(), ready_time_seconds = ${req.body.time_in_sec}
               WHERE id = ${req.body.oid} RETURNING msg_counter;`)
       .then((data) => {
