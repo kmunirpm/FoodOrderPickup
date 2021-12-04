@@ -10,16 +10,16 @@ of a ficticious restaurant can visit it's website, select one or more dishes and
 * When an order is placed the restaurant receives the order via SMS. The restaurant can then specify how long it will take to fulfill it. Once they provide this information, the website updates for the client and also notifies them via SMS.
 
 ## Final Product
-![""]()
-![""]()
-![""]()
-![""]()
-![""]()
+!["Homepage"](https://github.com/kmunirpm/FoodOrderPickup/blob/master/docs/Homepage.png)
+!["Shopping-cart"](https://github.com/kmunirpm/FoodOrderPickup/blob/master/docs/Shopping-cart.png)
+!["Restaurant Admin page"](https://github.com/kmunirpm/FoodOrderPickup/blob/master/docs/Admin-page.png)
+<!-- ![""]()
+![""]() -->
 
 ### User stories
 !["User Stories"](https://github.com/kmunirpm/FoodOrderPickup/blob/master/docs/user-stories.png?raw=true)
 
-## Database Design
+### Database Design
 !["Entity Relation Diagram"](https://github.com/kmunirpm/FoodOrderPickup/blob/master/docs/erd.png?raw=true)
 
 
